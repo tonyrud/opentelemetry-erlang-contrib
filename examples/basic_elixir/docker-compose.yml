@@ -1,27 +1,38 @@
 services:
   elixir:
     build: .
+    depends_on:
+      otelcol:
+        condition: service_started
+    environment:
+      - OTEL_EXPORTER_OTLP_ENDPOINT
 
-  otel:
+  otelcol:
     image: otel/opentelemetry-collector-contrib-dev:latest
     command: ["--config=/etc/otel-collector-config.yaml"]
     ports:
-      - '55681:55681'
-      - '55680:55680'
+      - "${OTEL_COLLECTOR_PORT_GRPC}:${OTEL_COLLECTOR_PORT_GRPC}" 
+      - "${OTEL_COLLECTOR_PORT_HTTP}:${OTEL_COLLECTOR_PORT_HTTP}"
+      - "55679:55679" # ZPages
     volumes:
       - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml
+    depends_on:
+      jaeger:
+        condition: service_started
+    environment:
+      - OTEL_COLLECTOR_HOST
+      - OTEL_COLLECTOR_PORT_GRPC
+      - OTEL_COLLECTOR_PORT_HTTP
 
   zipkin:
     image: openzipkin/zipkin-slim
     ports:
       - '9411:9411'
 
-  # Jaeger
-  jaeger-all-in-one:
+  jaeger:
     image: jaegertracing/all-in-one:latest
     ports:
       - "16686:16686"
-      - "14268"
-      - "14250"
+      - "${OTEL_COLLECTOR_PORT_GRPC}"
 
 

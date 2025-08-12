@@ -2,27 +2,32 @@ receivers:
   otlp:
     protocols:
       grpc:
-        endpoint: "0.0.0.0:55680"
+        endpoint: ${env:OTEL_COLLECTOR_HOST}:${env:OTEL_COLLECTOR_PORT_GRPC}
       http:
-        endpoint: "0.0.0.0:55681"
+        endpoint: ${env:OTEL_COLLECTOR_HOST}:${env:OTEL_COLLECTOR_PORT_HTTP}
+
 processors:
   batch:
     send_batch_size: 1024
     timeout: 5s
+
 exporters:
   zipkin:
     endpoint: "http://zipkin:9411/api/v2/spans"
-  jaeger:
-    endpoint: jaeger-all-in-one:14250
+  otlp/jaeger:
+    endpoint: "jaeger:${env:OTEL_COLLECTOR_PORT_GRPC}"
     tls:
       insecure: true
+
 extensions:
-  zpages: {}
+  zpages:
+    endpoint: :55679
+
 service:
   extensions: [zpages]
   pipelines:
     traces:
       receivers: [otlp]
       processors: [batch]
-      exporters: [zipkin, jaeger]
+      exporters: [otlp/jaeger, zipkin]
 

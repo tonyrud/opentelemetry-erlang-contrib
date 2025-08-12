@@ -10,7 +10,10 @@ defmodule BasicElixir.MixProject do
       deps: deps(),
       releases: [
         basic_elixir: [
-          applications: [opentelemetry: :temporary]
+          applications: [
+            opentelemetry_exporter: :permanent,
+            opentelemetry: :temporary
+          ]
         ]
       ]
     ]
@@ -19,7 +22,7 @@ defmodule BasicElixir.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger],
+      extra_applications: [:logger, :tls_certificate_check],
       mod: {BasicElixir.Application, []}
     ]
   end
@@ -27,8 +30,10 @@ defmodule BasicElixir.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:opentelemetry, "~> 1.0"},
-      {:opentelemetry_exporter, "~> 1.0"}
+      {:opentelemetry, "~> 1.5"},
+      {:opentelemetry_api, "~> 1.3"},
+      {:opentelemetry_exporter, "~> 1.6"},
+      {:tls_certificate_check, "~> 1.24"}
     ]
   end
 end
