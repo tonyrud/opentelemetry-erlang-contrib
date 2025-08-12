@@ -5,15 +5,15 @@ web application. For more elaborate examples, see [examples](/docs/instrumentati
 
 To start your Phoenix server:
 
-  * Run `mix setup` to install and setup dependencies
-  * Start the opentelemetry collector and Jaeger front-end with `docker-compose up -d`
-  * Set your service name `export OTEL_SERVICE_NAME="roll_dice"`
-  * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
+* Run `mix setup` to install and setup dependencies
+* Start the opentelemetry collector and Jaeger front-end with `docker-compose up -d`
+* Set your service name `export OTEL_SERVICE_NAME="roll_dice"`
+* Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
 
 To generate and view traces:
 
-  * Visit the new API endpoint with `curl http://localhost:4000/api/rolldice` or in your browser
-  * Visit [`localhost:16686`](http://localhost:16686) to see the traces in Jaeger
+* Visit the new API endpoint with `curl http://localhost:4000/api/rolldice` or in your browser
+* Visit [`localhost:16686`](http://localhost:16686) to see the traces in Jaeger
 
 For more information on the OpenTelemetry instrumentation in this example, check out the guide for getting started with [OpenTelemetry](https://opentelemetry.io/docs/instrumentation/erlang/getting-started/)
 
@@ -77,8 +77,8 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 
 ## Learn more
 
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+* Official website: https://www.phoenixframework.org/
+* Guides: https://hexdocs.pm/phoenix/overview.html
+* Docs: https://hexdocs.pm/phoenix
+* Forum: https://elixirforum.com/c/phoenix-forum
+* Source: https://github.com/phoenixframework/phoenix
