@@ -12,6 +12,13 @@ exporters:
     endpoint: "http://zipkin:9411/api/v2/spans"
     sending_queue:
       batch:
+  # zipkin:
+  #   endpoint: "http://zipkin:9411/api/v2/spans"
+  # otlp/jaeger:
+  #   endpoint: "jaeger:${env:OTEL_COLLECTOR_PORT_GRPC}"
+  #   tls:
+  #     insecure: true
+
 extensions:
   zpages:
     endpoint: :55679
@@ -23,4 +30,6 @@ service:
       receivers: [otlp]
       processors: []
       exporters: [zipkin]
+      # processors: [batch]
+      # exporters: [otlp/jaeger]
 
