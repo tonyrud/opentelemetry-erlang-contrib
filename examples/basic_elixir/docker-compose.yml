@@ -1,11 +1,11 @@
 services:
-  # elixir:
-  #   build: .
-  #   depends_on:
-  #     otelcol:
-  #       condition: service_started
-  #   environment:
-  #     - OTEL_EXPORTER_OTLP_ENDPOINT
+  elixir:
+    build: .
+    depends_on:
+      otelcol:
+        condition: service_started
+    environment:
+      - OTEL_EXPORTER_OTLP_ENDPOINT
 
   otelcol:
     image: otel/opentelemetry-collector-contrib-dev:latest

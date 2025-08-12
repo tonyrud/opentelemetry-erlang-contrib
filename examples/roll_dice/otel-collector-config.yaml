@@ -3,19 +3,21 @@ receivers:
   otlp:
     protocols:
       grpc:
-        endpoint: "0.0.0.0:4317"
+        endpoint: ${env:OTEL_COLLECTOR_HOST}:${env:OTEL_COLLECTOR_PORT_GRPC}
       http:
         cors:
           allowed_origins:
           - "http://localhost:4000"
-        endpoint: "0.0.0.0:4318"
+        endpoint: ${env:OTEL_COLLECTOR_HOST}:${env:OTEL_COLLECTOR_PORT_HTTP}
+
 processors:
   batch:
     send_batch_size: 1024
     timeout: 5s
+
 exporters:
-  otlp:
-    endpoint: jaeger-all-in-one:4317
+  otlp/jaeger:
+    endpoint: "jaeger:${env:OTEL_COLLECTOR_PORT_GRPC}"
     tls:
       insecure: true
 
@@ -36,12 +38,12 @@ service:
     traces:
       receivers: [otlp]
       processors: [batch]
-      exporters: [debug, otlp]
-    metrics:
-      receivers: [otlp]
-      processors: [batch]
-      exporters: [debug]
-    logs:
-      receivers: [otlp]
-      processors: [batch]
-      exporters: [debug]
+      exporters: [debug, otlp/jaeger]
+    # metrics:
+    #   receivers: [otlp]
+    #   processors: [batch]
+    #   exporters: [debug]
+    # logs:
+    #   receivers: [otlp]
+    #   processors: [batch]
+    #   exporters: [debug]

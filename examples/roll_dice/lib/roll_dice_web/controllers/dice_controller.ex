@@ -3,6 +3,10 @@ defmodule RollDiceWeb.DiceController do
   require OpenTelemetry.Tracer, as: Tracer
 
   def roll(conn, _params) do
+    timeout = Enum.random(100..500)
+
+    Process.sleep(timeout)
+
     send_resp(conn, 200, roll_dice())
   end
 

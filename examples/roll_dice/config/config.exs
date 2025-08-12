@@ -22,6 +22,11 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
+# Configure the OpenTelemetry SDK & Exporter
+config :opentelemetry,
+  span_processor: :batch,
+  traces_exporter: :otlp
+
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 

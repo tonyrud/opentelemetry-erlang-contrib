@@ -12,8 +12,8 @@ processors:
     timeout: 5s
 
 exporters:
-  zipkin:
-    endpoint: "http://zipkin:9411/api/v2/spans"
+  # zipkin:
+  #   endpoint: "http://zipkin:9411/api/v2/spans"
   otlp/jaeger:
     endpoint: "jaeger:${env:OTEL_COLLECTOR_PORT_GRPC}"
     tls:
@@ -29,5 +29,5 @@ service:
     traces:
       receivers: [otlp]
       processors: [batch]
-      exporters: [otlp/jaeger, zipkin]
+      exporters: [otlp/jaeger]
 

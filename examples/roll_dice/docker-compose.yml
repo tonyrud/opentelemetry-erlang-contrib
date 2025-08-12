@@ -1,23 +1,26 @@
-version: "3"
 services:
-  otel:
-    image: otel/opentelemetry-collector-contrib:0.76.1
-    command: ["--config=/conf/otel-collector-config.yaml"]
-    privileged: true
+  
+  otelcol:
+    image: otel/opentelemetry-collector-contrib-dev:latest
+    command: ["--config=/etc/otel-collector-config.yaml"]
     ports:
-      - 4317:4317
-      - 4318:4318
-      - 55679:55679
+      - "${OTEL_COLLECTOR_PORT_GRPC}:${OTEL_COLLECTOR_PORT_GRPC}" 
+      - "${OTEL_COLLECTOR_PORT_HTTP}:${OTEL_COLLECTOR_PORT_HTTP}"
+      - "55679:55679" # ZPages
     volumes:
-      - ./otel-collector-config.yaml:/conf/otel-collector-config.yaml
-    links:
-      - jaeger-all-in-one
-
-  jaeger-all-in-one:
-    image: jaegertracing/all-in-one:1.45
-    restart: always
+      - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml
+    depends_on:
+      jaeger:
+        condition: service_started
     environment:
-      COLLECTOR_OTLP_ENABLED: true
+      - OTEL_COLLECTOR_HOST
+      - OTEL_COLLECTOR_PORT_GRPC
+      - OTEL_COLLECTOR_PORT_HTTP
+
+  jaeger:
+    image: jaegertracing/all-in-one:latest
     ports:
       - "16686:16686"
-      - "4317"
+      - "${OTEL_COLLECTOR_PORT_GRPC}"
+
+
