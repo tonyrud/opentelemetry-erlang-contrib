@@ -1,11 +1,11 @@
 services:
-  elixir:
-    build: .
-    depends_on:
-      otelcol:
-        condition: service_started
-    environment:
-      - OTEL_EXPORTER_OTLP_ENDPOINT
+  # elixir:
+  #   build: .
+  #   depends_on:
+  #     otelcol:
+  #       condition: service_started
+  #   environment:
+  #     - OTEL_EXPORTER_OTLP_ENDPOINT
 
   otelcol:
     image: otel/opentelemetry-collector-contrib-dev:latest
@@ -23,11 +23,6 @@ services:
       - OTEL_COLLECTOR_HOST
       - OTEL_COLLECTOR_PORT_GRPC
       - OTEL_COLLECTOR_PORT_HTTP
-
-  zipkin:
-    image: openzipkin/zipkin-slim
-    ports:
-      - '9411:9411'
 
   jaeger:
     image: jaegertracing/all-in-one:latest
