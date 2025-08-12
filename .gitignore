@@ -26,3 +26,4 @@ doc
 .tool-versions
 **/.tool-versions
 rebar3.crashdump
+.DS_Store
