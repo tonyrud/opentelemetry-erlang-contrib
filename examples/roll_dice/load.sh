@@ -9,6 +9,7 @@ BASE_URL=${BASE_URL:-"http://localhost:4000"}
 
 URLS=(
   "/random"
+  "/api/oops"
   "/api/rolldice"
 )
 URLS_LEN=${#URLS[@]}

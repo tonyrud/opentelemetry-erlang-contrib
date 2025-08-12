@@ -2,10 +2,24 @@ defmodule RollDiceWeb.DiceController do
   use RollDiceWeb, :controller
   require OpenTelemetry.Tracer, as: Tracer
 
+  require Logger
+
   def roll(conn, _params) do
     timeout = Enum.random(100..500)
 
     Process.sleep(timeout)
+
+    send_resp(conn, 200, roll_dice())
+  end
+
+  def oops(conn, _params) do
+    timeout = Enum.random(100..500)
+
+    Logger.info("Rolling dice...")
+
+    Process.sleep(timeout)
+
+    raise "Oops!"
 
     send_resp(conn, 200, roll_dice())
   end

@@ -9,5 +9,6 @@ defmodule RollDiceWeb.Router do
     pipe_through :api
 
     get "/rolldice", DiceController, :roll
+    get "/oops", DiceController, :oops
   end
 end
