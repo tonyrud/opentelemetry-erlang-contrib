@@ -3,12 +3,21 @@ defmodule BasicElixir.Application do
   # for more information on OTP Applications
   @moduledoc false
 
+  require OpenTelemetry.Tracer, as: Tracer
+  require OpenTelemetry.Span
+  require Logger
+
   use Application
 
   def start(_type, _args) do
+    Tracer.with_span :init do
+      Logger.info("Starting #{__MODULE__}...")
+      # {:ok, stack}
+    end
+
     children = [
       # Starts a worker by calling: BasicElixir.Worker.start_link(arg)
-      {BasicElixir.Worker, []}
+      # {BasicElixir.Worker, []}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

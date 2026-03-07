@@ -9,7 +9,7 @@ defmodule Demo.Application do
   def start(_type, _args) do
     :opentelemetry_cowboy.setup()
     OpentelemetryPhoenix.setup(adapter: :cowboy2)
-    OpentelemetryEcto.setup([:demo, :repo])
+    OpentelemetryEcto.setup(event_prefix: [:demo, :repo])
 
     children = [
       # Start the Ecto repository

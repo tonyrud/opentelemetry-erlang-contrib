@@ -16,7 +16,7 @@ processors:
     timeout: 5s
 
 exporters:
-  otlp/jaeger:
+  otlp:
     endpoint: "jaeger:${env:OTEL_COLLECTOR_PORT_GRPC}"
     tls:
       insecure: true
